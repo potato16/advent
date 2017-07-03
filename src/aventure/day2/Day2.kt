@@ -21,38 +21,37 @@ fun main(args: Array<String>) {
         val k_list = k_raw.toCharArray()
          for (move in k_list){
             when(move){
-                'U'-> {
-                    if (k_cur.row>0)
-                       k_cur.row -=1
-
-                }
-                'D' -> {
-                    if (k_cur.row<2)
-                        k_cur.row+=1
-
-                }
-                'L' -> {
-                    if(k_cur.col>0)
-                        k_cur.col-=1
-
-                }
-                'R' -> {
-                    if(k_cur.col<2)
-                        k_cur.col+=1
-
-                }
+                'U'-> if(k_cur.row>0) k_cur.row-=1
+                'D'-> if(k_cur.row<2) k_cur.row+=1
+                'L'-> if(k_cur.col>0) k_cur.col-=1
+                'R'-> if(k_cur.col<2) k_cur.col+=1
             }
         }
         bath_code+=(k_cur.row*3 + (k_cur.col+1)%3 + ((k_cur.col+1)/3)*3).toString()
     }
     // Part 2
     // Oh, man. I hate to fill data by hand. I fucking idiot
-    val keyPadDiamond = listOf(listOf('0','0','1','0','0'), listOf('0','2','3','4','0'), listOf('5','6','7','8','9'), listOf('0','A','B','C','0'), listOf('0','0','D','0','0'))
+    val keyPadDiamond = listOf(
+            listOf('0','0','1','0','0'),
+            listOf('0','2','3','4','0'),
+            listOf('5','6','7','8','9'),
+            listOf('0','A','B','C','0'),
+            listOf('0','0','D','0','0'))
     k_cur.row = 2
     k_cur.col = 0
+    var bath_code_2 = ""
     for (k_raw in l_input){
         val k_list = k_raw.toCharArray()
-        for (move in )
+        for (move in k_list){
+            when(move){
+                'U' -> if(k_cur.row>0 && keyPadDiamond[k_cur.row-1][k_cur.col] !='0') k_cur.row -=1
+                'D' -> if(k_cur.row<4 && keyPadDiamond[k_cur.row+1][k_cur.col] !='0') k_cur.row +=1
+                'L' -> if(k_cur.col>0 && keyPadDiamond[k_cur.row][k_cur.col-1] !='0') k_cur.col -=1
+                'R' -> if(k_cur.col<4 && keyPadDiamond[k_cur.row][k_cur.col+1] !='0') k_cur.col +=1
+            }
+        }
+        bath_code_2 +=keyPadDiamond[k_cur.row][k_cur.col]
     }
     println(bath_code)
+    println(bath_code_2)
 }
